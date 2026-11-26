@@ -152,6 +152,10 @@ function render() {
     remove.disabled = pending;
     actions.append(edit, remove);
     row.append(status, titleWrap, created, actions);
+    row.addEventListener('click', (event) => {
+      if (event.target.closest('button')) return;
+      toggleDetails(ticket.id);
+    });
     container.append(row);
 
     if (expanded.has(ticket.id)) {
@@ -197,8 +201,6 @@ async function refresh() {
     if (thisReload !== reloadCounter) return;
     updateStatus(false);
     setFeedback(error.message);
-    tickets = [];
-    render();
   } finally {
     if (thisReload === reloadCounter) setBusy(false);
   }
@@ -320,7 +322,7 @@ async function showForm(mode, id = null) {
         descriptions.delete(id);
         expanded.delete(id);
       } else {
-        await api.createTicket({id: null, ...payload});
+        await api.createTicket(payload);
       }
       if (activeModal === currentModal) closeModal();
       showToast(isEdit ? 'Заявка сохранена' : 'Заявка создана');
