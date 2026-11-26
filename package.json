@@ -2,6 +2,7 @@
   "name": "netology-helpdesk-http",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "HelpDesk: HTTP, fetch, Webpack and GitHub Pages",
   "scripts": {
     "start": "webpack serve --mode development",
